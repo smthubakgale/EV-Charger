@@ -112,6 +112,65 @@ current5 = sim_out.logsout.get('Battery5_Current').Values.Data;
 grid_voltage = sim_out.logsout.get('Grid_Voltage').Values.Data;
 grid_current = sim_out.logsout.get('Grid_Current').Values.Data;
 
+% Calculate the power of each battery
+battery_power1 = voltage1 .* current1;
+battery_power2 = voltage2 .* current2;
+battery_power3 = voltage3 .* current3;
+battery_power4 = voltage4 .* current4;
+battery_power5 = voltage5 .* current5;
+
+% Calculate the total power of the batteries
+total_battery_power = battery_power1 + battery_power2 + battery_power3 + battery_power4 + battery_power5;
+
+% Calculate the power of the grid
+grid_power = grid_voltage .* grid_current;
+
+% Plot the energy stored in each battery
+figure;
+subplot(5,1,1);
+plot(battery_energy1);
+title('Battery 1 Energy');
+xlabel('Time (s)');
+ylabel('Energy (Wh)');
+
+subplot(5,1,2);
+plot(battery_energy2);
+title('Battery 2 Energy');
+xlabel('Time (s)');
+ylabel('Energy (Wh)');
+
+subplot(5,1,3);
+plot(battery_energy3);
+title('Battery 3 Energy');
+xlabel('Time (s)');
+ylabel('Energy (Wh)');
+
+subplot(5,1,4);
+plot(battery_energy4);
+title('Battery 4 Energy');
+xlabel('Time (s)');
+ylabel('Energy (Wh)');
+
+subplot(5,1,5);
+plot(battery_energy5);
+title('Battery 5 Energy');
+xlabel('Time (s)');
+ylabel('Energy (Wh)');
+
+% Plot the total energy stored in the batteries
+figure;
+plot(total_battery_energy);
+title('Total Battery Energy');
+xlabel('Time (s)');
+ylabel('Energy (Wh)');
+
+% Plot the energy supplied by the grid
+figure;
+plot(grid_energy);
+title('Grid Energy');
+xlabel('Time (s)');
+ylabel('Energy (Wh)');
+
 % Plot the results
 figure;
 subplot(6,1,1);
@@ -149,9 +208,5 @@ plot(grid_current);
 title('Grid Current');
 xlabel('Time (s)');
 ylabel('Current (A)');
-
-
-
-
 
 
