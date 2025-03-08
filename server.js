@@ -52,7 +52,7 @@ app.post('/message', (req, res) =>
     return;
   }
 
-  const message = req.body.message;
+  const message = req.body;
   
   console.log(message);
   
