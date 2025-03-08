@@ -39,8 +39,16 @@ app.get('/events', (req, res) =>
 	  });
 
 	  // Return messages that don't belong to the current client
-	  const messagesForClient = messages.filter(message => message.clientId !== clientId);
-	  
+	  const messagesForClient = messages
+		  .filter(message => message.clientId !== clientId && !message.read.includes(clientId))
+		  .map(message => {
+			if (!message.read) {
+			  message.read = [];
+			}
+			message.read.push(clientId);
+			return message.message;
+		  });
+	    
 	  res.json(messagesForClient);
 	  // 
   }
