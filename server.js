@@ -1,9 +1,15 @@
-const http = require('http');
 const express = require('express');
 const app = express();
+const http = require('http').createServer(app);
 
 const clients = {};
 let clientId = 0;
+
+app.use(express.json());
+
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
 
 app.get('/events', (req, res) => {
   const id = clientId++;
@@ -21,21 +27,15 @@ app.get('/events', (req, res) => {
 });
 
 app.post('/message', (req, res) => {
-  let body = '';
-  req.on('data', (chunk) => {
-    body += chunk.toString();
-  });
-  req.on('end', () => {
-    const message = JSON.parse(body).message;
-    for (const client in clients) {
-      clients[client].write(`event: message\n`);
-      clients[client].write(`data: ${message}\n\n`);
-    }
-    res.status(200).send('Message sent!');
-  });
+  const message = req.body.message;
+  for (const client in clients) {
+    clients[client].write(`event: message\n`);
+    clients[client].write(`data: ${message}\n\n`);
+  }
+  res.status(200).send('Message sent!');
 });
 
-const server = http.createServer(app);
-server.listen(3000, () => {
-  console.log('Server listening on port 3000');
+const port = process.env.PORT || 3000;
+http.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
 });
