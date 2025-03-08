@@ -23,8 +23,15 @@ app.get('/events', (req, res) => {
     'Connection': 'keep-alive'
   });
 
+  // Send heartbeat messages every 20 seconds
+  const heartbeatInterval = setInterval(() => {
+    res.write(`event: heartbeat\n`);
+    res.write(`data: \n\n`);
+  }, 20000);
+
   req.on('close', () => {
     delete clients[id];
+    clearInterval(heartbeatInterval);
   });
 });
 
