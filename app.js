@@ -6,6 +6,10 @@ app.get('/', (req, res) => {
   res.send('EV-Charger Server');
 });
 
+app.get('/test', (req, res) => {
+  res.send('Test route');
+});
+
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
