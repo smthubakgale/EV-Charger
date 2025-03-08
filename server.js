@@ -64,7 +64,7 @@ app.get('/message', (req, res) => {
 
   const message = req.query.message;
   // Store message with clientId and timestamp
-  messages.push({ clientId, message, timestamp: Date.now() });
+  messages.push({ clientId, message, timestamp: Date.now() , read:[] });
   
   res.status(200).send('Message sent!');
 });
