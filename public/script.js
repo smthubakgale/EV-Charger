@@ -23,12 +23,16 @@ function fetchMessages() {
 
 sendButton.addEventListener('click', () => {
   const message = messageInput.value;
-  fetch('https://ev-charger-ashy.vercel.app/message', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ "message" : message })
-  });
+  fetch(`https://ev-charger-ashy.vercel.app/message?message=${message}`)
+    .then((response) => {
+      if (response.ok) {
+        console.log('Message sent successfully!');
+      } else {
+        console.log('Failed to send message.');
+      }
+    })
+    .catch((error) => {
+      console.error('Error sending message:', error);
+    });
   messageInput.value = '';
 });

@@ -21,8 +21,7 @@ app.get('/events', (req, res) =>
   const clientId = generateClientId(req);
   
   if (!clients[clientId]) {
-    res.status(401).send('Unauthorized');
-    return;
+    addClient(clientId);
   }
 
   console.log(clients);
@@ -39,23 +38,14 @@ app.get('/events', (req, res) =>
   }
 });
 
-app.post('/message', (req, res) => 
-{
-	
+app.get('/message', (req, res) => {
   const clientId = generateClientId(req);
-
-  console.log(clients);
-  console.log(clientId);
   
   if (!clients[clientId]) {
-    res.status(401).send('Unauthorized');
-    return;
+    addClient(clientId);
   }
 
-  const message = req.body.message;
-  
-  console.log(message);
-  
+  const message = req.query.message;
   messages.push(message);
   res.status(200).send('Message sent!');
 });
@@ -70,6 +60,11 @@ function generateClientId(req) {
   
   const clientId = uuid.v5(`${ipAddress}${browserName}${deviceId}`, namespace);
   return clientId;
+}
+
+function addClient(clientId) {
+  clients[clientId] = true;
+  console.log(`Client added: ${clientId}`);
 }
 
 const port = process.env.PORT || 3000;
