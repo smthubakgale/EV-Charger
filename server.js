@@ -29,14 +29,20 @@ app.get('/events', (req, res) => {
     res.write(`data: \n\n`);
   }, 20000);
 
+  console.log("A");
   req.on('close', () => {
     delete clients[id];
     clearInterval(heartbeatInterval);
+	
+	console.log("Exiting " + id);
   });
 });
 
 app.post('/message', (req, res) => {
   const message = req.body.message;
+  
+  console.log(message);
+  
   for (const client in clients) {
     clients[client].write(`event: message\n`);
     clients[client].write(`data: ${message}\n\n`);

@@ -2,13 +2,24 @@ const messageInput = document.getElementById('message');
 const sendButton = document.getElementById('send');
 const messagesList = document.getElementById('messages');
 
-const eventSource = new EventSource('https://ev-charger-ashy.vercel.app/events');
+let eventSource = new EventSource('https://ev-charger-ashy.vercel.app/events');
 
-eventSource.onmessage = (event) => {
-  const messageItem = document.createElement('li');
-  messageItem.textContent = event.data;
-  messagesList.appendChild(messageItem);
-};
+function attachEventListeners() {
+  eventSource.onmessage = (event) => {
+    const messageItem = document.createElement('li');
+    messageItem.textContent = event.data;
+    messagesList.appendChild(messageItem);
+  };
+
+  eventSource.onerror = () => {
+    console.log('EventSource connection closed');
+    eventSource.close();
+    eventSource = new EventSource('https://ev-charger-ashy.vercel.app/events');
+    attachEventListeners();
+  };
+}
+
+attachEventListeners();
 
 sendButton.addEventListener('click', () => {
   const message = messageInput.value;
