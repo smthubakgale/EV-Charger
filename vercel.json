@@ -3,15 +3,7 @@
   "builds": [
     {
       "src": "app.js",
-      "use": "@vercel/node",
-      "config": {
-        "rewrites": [
-          {
-            "source": "/",
-            "destination": "/"
-          }
-        ]
-      }
+      "use": "@vercel/node-server"
     }
   ]
 }
