@@ -26,14 +26,12 @@ app.get('/events', (req, res) =>
 
   console.log(clients);
 
-  if (messages.length === 0) {
-    // Long polling: wait for 20 seconds before responding
-    setTimeout(() => {
-      res.json([]);
-    }, 20000);
+  if (messages.length === 0) { 
+    res.json([]);
   } else {
+	  
     const messagesCopy = messages.slice();
-    messages.length = 0; // Clear the messages array
+    messages.length = 0; 
     res.json(messagesCopy);
   }
 });

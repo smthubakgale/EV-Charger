@@ -17,7 +17,7 @@ function fetchMessages() {
         messagesList.appendChild(messageItem);
       });
       // Long polling: fetch messages again after 1 second
-      //setTimeout(fetchMessages, 1000);
+      setTimeout(fetchMessages, 1000);
     });
 }
 
