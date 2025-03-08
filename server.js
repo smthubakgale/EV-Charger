@@ -45,6 +45,7 @@ app.post('/message', (req, res) =>
   const clientId = generateClientId(req);
 
   console.log(clients);
+  console.log(clientId);
   
   if (!clients[clientId]) {
     res.status(401).send('Unauthorized');
@@ -52,6 +53,9 @@ app.post('/message', (req, res) =>
   }
 
   const message = req.body.message;
+  
+  console.log(message);
+  
   messages.push(message);
   res.status(200).send('Message sent!');
 });

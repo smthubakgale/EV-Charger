@@ -28,7 +28,7 @@ sendButton.addEventListener('click', () => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ clientId, message })
+    body: JSON.stringify({ message })
   });
   messageInput.value = '';
 });
