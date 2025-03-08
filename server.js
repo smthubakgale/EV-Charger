@@ -4,7 +4,6 @@ const http = require('http').createServer(app);
 const path = require('path');
 const uuid = require('uuid');
 
-const DNS_NAME = 'my-dns-name';
 const messages = [];
 const clients = {};
 
