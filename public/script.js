@@ -2,24 +2,28 @@ const messageInput = document.getElementById('message');
 const sendButton = document.getElementById('send');
 const messagesList = document.getElementById('messages');
 
-let eventSource = new EventSource('https://ev-charger-ashy.vercel.app/events');
+let clientId;
 
-function attachEventListeners() {
-  eventSource.onmessage = (event) => {
-    const messageItem = document.createElement('li');
-    messageItem.textContent = event.data;
-    messagesList.appendChild(messageItem);
-  };
+fetch('/api/client-id')
+  .then((response) => response.text())
+  .then((clientIdResponse) => {
+    clientId = clientIdResponse;
+    fetchMessages();
+  });
 
-  eventSource.onerror = (e) => {
-    console.log('EventSource connection closed' , e);
-    //eventSource.close();
-    //eventSource = new EventSource('https://ev-charger-ashy.vercel.app/events');
-    //attachEventListeners();
-  };
+function fetchMessages() {
+  fetch(`https://ev-charger-ashy.vercel.app/events?clientId=${clientId}`)
+    .then((response) => response.json())
+    .then((messages) => {
+      messages.forEach((message) => {
+        const messageItem = document.createElement('li');
+        messageItem.textContent = message;
+        messagesList.appendChild(messageItem);
+      });
+      // Long polling: fetch messages again after 1 second
+      setTimeout(fetchMessages, 1000);
+    });
 }
-
-attachEventListeners();
 
 sendButton.addEventListener('click', () => {
   const message = messageInput.value;
@@ -28,7 +32,7 @@ sendButton.addEventListener('click', () => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ message })
+    body: JSON.stringify({ clientId, message })
   });
   messageInput.value = '';
 });
