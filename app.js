@@ -1,16 +1,11 @@
 const express = require('express');
-const http = require('http').createServer(app);
-const io = require('socket.io')(http);
-const websocketController = require('./controllers/websocket');
-
 const app = express();
+const port = process.env.PORT || 3000;
 
-app.use(express.static('public'));
-
-io.on('connection', (socket) => {
-  websocketController.handleConnection(socket);
+app.get('/', (req, res) => {
+  res.send('EV-Charger Server');
 });
 
-http.listen(3000, () => {
-  console.log('Server listening on port 3000');
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
 });
