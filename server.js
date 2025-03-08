@@ -1,11 +1,13 @@
 const express = require('express');
 const app = express();
 const http = require('http').createServer(app);
+const path = require('path');
 
 const clients = {};
 let clientId = 0;
 
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
