@@ -11,11 +11,11 @@ function attachEventListeners() {
     messagesList.appendChild(messageItem);
   };
 
-  eventSource.onerror = () => {
-    console.log('EventSource connection closed');
-    eventSource.close();
-    eventSource = new EventSource('https://ev-charger-ashy.vercel.app/events');
-    attachEventListeners();
+  eventSource.onerror = (e) => {
+    console.log('EventSource connection closed' , e);
+    //eventSource.close();
+    //eventSource = new EventSource('https://ev-charger-ashy.vercel.app/events');
+    //attachEventListeners();
   };
 }
 

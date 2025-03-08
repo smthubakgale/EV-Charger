@@ -27,9 +27,10 @@ app.get('/events', (req, res) => {
   const heartbeatInterval = setInterval(() => {
     res.write(`event: heartbeat\n`);
     res.write(`data: \n\n`);
-  }, 20000);
+  }, 5000);
 
-  console.log("A");
+  console.log("Connect Event : " + id);
+  
   req.on('close', () => {
     delete clients[id];
     clearInterval(heartbeatInterval);
