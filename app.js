@@ -6,10 +6,16 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 const server = http.createServer(app);
-const wss = new WebSocket.Server({ server, path: '/ws' });
+const wss = new WebSocket.Server({ noServer: true });
 
 app.get('/', (req, res) => {
   res.send('EV-Charger Server');
+});
+
+server.on('upgrade', (req, socket, head) => {
+  wss.handleUpgrade(req, socket, head, (ws) => {
+    wss.emit('connection', ws, req);
+  });
 });
 
 wss.on('connection', (ws) => {
