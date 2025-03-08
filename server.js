@@ -23,6 +23,8 @@ app.get('/events', (req, res) => {
     return;
   }
 
+  console.log(clients);
+
   if (messages.length === 0) {
     // Long polling: wait for 20 seconds before responding
     setTimeout(() => {
@@ -41,6 +43,8 @@ app.post('/message', (req, res) => {
     res.status(401).send('Unauthorized');
     return;
   }
+
+  console.log(clients);
 
   const message = req.body.message;
   messages.push(message);
