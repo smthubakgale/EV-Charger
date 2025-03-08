@@ -6,7 +6,7 @@
     "build": "echo 'Built'"
   },
   "dependencies": {
-    "@vercel/node": "^5.1.12",
+    "@vercel/node": "^4.0.0",
     "express": "^4.21.2",
     "ws": "^8.18.1"
   }
