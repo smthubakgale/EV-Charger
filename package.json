@@ -2,8 +2,7 @@
   "name": "express-websocket-server",
   "version": "1.0.0",
   "scripts": {
-    "start": "node app.js",
-    "test": "jest"
+    "start": "node app.js"
   },
   "dependencies": {
     "express": "^4.17.1",
