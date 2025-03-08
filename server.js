@@ -51,7 +51,11 @@ function generateClientId(req) {
   const ipAddress = req.ip;
   const browserName = req.headers['user-agent'];
   const deviceId = req.headers['device-id'];
-  const clientId = uuid.v5(`${ipAddress}${browserName}${deviceId}`, uuid.v3('my-dns-name', uuid.v3));
+  const namespace = uuid.v4();
+  
+  console.log(namespace);
+  
+  const clientId = uuid.v5(`${ipAddress}${browserName}${deviceId}`, namespace);
   return clientId;
 }
 
