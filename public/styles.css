@@ -2,6 +2,10 @@ body {
   font-family: Arial, sans-serif;
 }
 
+h1 {
+	color: red; 
+}
+
 #messages {
   list-style: none;
   padding: 0;
