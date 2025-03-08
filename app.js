@@ -6,7 +6,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 const server = http.createServer(app);
-const wss = new WebSocket.Server({ server });
+const wss = new WebSocket.Server({ server, path: '/ws' });
 
 app.get('/', (req, res) => {
   res.send('EV-Charger Server');
