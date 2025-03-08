@@ -28,12 +28,23 @@ app.get('/events', (req, res) =>
 
   if (messages.length === 0) { 
     res.json([]);
-  } else {
+  } 
+  else 
+  {
+     // Remove messages older than 30 seconds
+	  messages.forEach((message, index) => {
+		if (Date.now() - message.timestamp > 30000) {
+		  messages.splice(index, 1);
+		}
+	  });
+
+	  // Return messages that don't belong to the current client
+	  const messagesForClient = messages.filter(message => message.clientId !== clientId);
 	  
-    const messagesCopy = messages.slice();
-    messages.length = 0; 
-    res.json(messagesCopy);
+	  res.json(messagesForClient);
+	  // 
   }
+  
 });
 
 app.get('/message', (req, res) => {
@@ -44,7 +55,9 @@ app.get('/message', (req, res) => {
   }
 
   const message = req.query.message;
-  messages.push(message);
+  // Store message with clientId and timestamp
+  messages.push({ clientId, message, timestamp: Date.now() });
+  
   res.status(200).send('Message sent!');
 });
 
