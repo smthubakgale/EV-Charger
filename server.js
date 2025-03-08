@@ -16,8 +16,10 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
-app.get('/events', (req, res) => {
-  const clientId = req.query.clientId;
+app.get('/events', (req, res) => 
+{
+  const clientId = generateClientId(req);
+  
   if (!clients[clientId]) {
     res.status(401).send('Unauthorized');
     return;
@@ -37,14 +39,17 @@ app.get('/events', (req, res) => {
   }
 });
 
-app.post('/message', (req, res) => {
-  const clientId = req.body.clientId;
+app.post('/message', (req, res) => 
+{
+	
+  const clientId = generateClientId(req);
+
+  console.log(clients);
+  
   if (!clients[clientId]) {
     res.status(401).send('Unauthorized');
     return;
   }
-
-  console.log(clients);
 
   const message = req.body.message;
   messages.push(message);
@@ -55,9 +60,9 @@ function generateClientId(req) {
   const ipAddress = req.ip;
   const browserName = req.headers['user-agent'];
   const deviceId = req.headers['device-id'];
-  const namespace = uuid.v4();
+  const namespace = 'd8f6db77-1312-4bac-8a93-2a042155301c'; //uuid.v4();
   
-  console.log(namespace);
+  //console.log(namespace);
   
   const clientId = uuid.v5(`${ipAddress}${browserName}${deviceId}`, namespace);
   return clientId;
