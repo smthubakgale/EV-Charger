@@ -6,12 +6,7 @@
       "use": "@vercel/node"
     }
   ],
-  "routes": [
-    {
-      "src": "/ws",
-      "dest": "app.js",
-      "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"]
-    },
+  "routes": [ 
     {
       "src": "/(.*)",
       "dest": "app.js"
