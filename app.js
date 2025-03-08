@@ -1,14 +1,16 @@
 const express = require('express');
 const WebSocket = require('ws');
-const { createServer } = require('@vercel/node');
+const http = require('http');
 
 const app = express();
+const port = process.env.PORT || 3000;
+
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server, path: '/ws' });
 
 app.get('/', (req, res) => {
   res.send('EV-Charger Server');
 });
-
-const wss = new WebSocket.Server({ noServer: true });
 
 wss.on('connection', (ws) => {
   console.log('Client connected');
@@ -23,10 +25,6 @@ wss.on('connection', (ws) => {
   });
 });
 
-const server = createServer(app, (req, res, head) => {
-  wss.handleUpgrade(req, req.socket, head, (ws) => {
-    wss.emit('connection', ws, req);
-  });
+server.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
 });
-
-module.exports = server;
